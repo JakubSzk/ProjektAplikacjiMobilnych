@@ -69,6 +69,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier.fillMaxSize()) {
     miesnie["brzuch"]?.add(Triple<Pair<Float, Float>, Pair<Float, Float>, Pair<Float, Float>>(Pair<Float, Float>(zmienna*106.0903f, zmienna*149.39414f), Pair<Float, Float>(zmienna*95.664345f, zmienna* 122.03254f), Pair<Float, Float>(zmienna*104.77843f, zmienna*93.277185f)))
     miesnie["brzuch"]?.add(Triple<Pair<Float, Float>, Pair<Float, Float>, Pair<Float, Float>>(Pair<Float, Float>(zmienna*106.11521f, zmienna*149.78275f), Pair<Float, Float>(zmienna*116.54117f, zmienna* 122.42115f), Pair<Float, Float>(zmienna* 107.42708f, zmienna*93.665785f)))
 
+    miesnie.put("boki",mutableListOf(Triple<Pair<Float, Float>, Pair<Float, Float>, Pair<Float, Float>>(Pair<Float, Float>(zmienna*84.841468f, zmienna*90.812612f), Pair<Float, Float>(zmienna*86.705708f, zmienna*121.25515f), Pair<Float, Float>(zmienna* 92.988898f, zmienna*96.534341f))))
+    miesnie["boki"]?.add(Triple<Pair<Float, Float>, Pair<Float, Float>, Pair<Float, Float>>(Pair<Float, Float>(zmienna*126.89808f, zmienna*89.631232f), Pair<Float, Float>(zmienna*125.03384f, zmienna*120.07377f), Pair<Float, Float>(zmienna*118.75065f, zmienna*95.352961f)))
+    miesnie["boki"]?.add(Triple<Pair<Float, Float>, Pair<Float, Float>, Pair<Float, Float>>(Pair<Float, Float>(zmienna*91.917678f, zmienna*135.85072f), Pair<Float, Float>(zmienna*93.160518f, zmienna*97.852555f), Pair<Float, Float>(zmienna*86.393988f, zmienna*127.12141f)))
+    miesnie["boki"]?.add(Triple<Pair<Float, Float>, Pair<Float, Float>, Pair<Float, Float>>(Pair<Float, Float>(zmienna*119.92443f, zmienna*135.40508f), Pair<Float, Float>(zmienna*118.68159f, zmienna*97.406916f), Pair<Float, Float>(zmienna*125.44812f, zmienna*126.67577f)))
+
     Canvas(modifier = Modifier.size((zmienna*210).dp, (zmienna*297).dp)
         .pointerInput(Unit) {
             detectTapGestures(
@@ -88,6 +93,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier.fillMaxSize()) {
                             if ((d1<=0)&&(d2<=0)&&(d3<=0) || (d1>=0)&&(d2>=0)&&(d3>=0) )
                             {
                                 println("klikniety")
+                                nazwa = miesien.key
                             }
                         }
                     }
@@ -237,7 +243,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier.fillMaxSize()) {
 
         drawPath( //brzuch
             path = path,
-            color = Color.Black
+            color =  if (nazwa == "brzuch") Color.Green else Color.Black
         )
         drawPath( //klata gora
             path = path1,
