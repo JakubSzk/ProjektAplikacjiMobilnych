@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Delete
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
@@ -14,12 +15,15 @@ import androidx.room.RoomDatabase
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
-@Entity(tableName = "stats")
+@Entity(tableName = "stats", foreignKeys = [
+    ForeignKey(entity = MuscleElement::class, parentColumns = ["id_m"], childColumns = ["m_id"])
+])
 data class StatsElement(
     @PrimaryKey(autoGenerate = true) val id_s: Int,
     val nazwa: String,
     val opis: String,
-    val statystyka: Int
+    val statystyka: Int,
+    val m_id: Int
 ) {
     init {
         require(statystyka < 100 && statystyka >= 0 && nazwa.isNotEmpty())
