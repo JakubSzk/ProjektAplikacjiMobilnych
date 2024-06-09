@@ -28,9 +28,6 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercisess ORDER BY opis ASC")
     fun getExercise(): Flow<List<ExerciseElement>>
 
-    @Query("SELECT DISTINCT nazwa, id_e, opis, m_id, dlugosc_ruchu FROM exercisess")
-    fun getExercise2(): Flow<List<ExerciseElement>>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: ExerciseElement)
 

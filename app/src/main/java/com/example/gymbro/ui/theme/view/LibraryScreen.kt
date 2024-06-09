@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.gymbro.ui.theme.LightGreen
 import com.example.gymbro.ui.theme.Purple40
+import com.example.gymbro.ui.theme.model.ExerciseElement
 import com.example.gymbro.ui.theme.model.Screens
 import com.example.gymbro.ui.theme.viewModel.ExerciseViewModel
 import com.example.gymbro.ui.theme.viewModel.ExerciseViewModelFactory
@@ -41,8 +42,15 @@ fun LibraryScreen(navController: NavHostController, bottomPadding: Dp){
         "UserViewModelExercise",
         ExerciseViewModelFactory(LocalContext.current.applicationContext as Application)
     )
-    viewModelExercise.fetchExercise2()
     val exerciseElements by viewModelExercise.usersState.collectAsStateWithLifecycle()
+
+    val pobierane = mutableListOf<String>()
+    for (choosen in exerciseElements) {
+        if (!(choosen.nazwa in pobierane))
+        {
+            pobierane.add(choosen.nazwa)
+        }
+    }
 
     Scaffold ( modifier = Modifier.padding(bottom = bottomPadding),
         floatingActionButton = {
@@ -65,7 +73,7 @@ fun LibraryScreen(navController: NavHostController, bottomPadding: Dp){
                     .weight(0.7f)
 
                 ) {
-                    items(exerciseElements.size) {
+                    items(pobierane.size) {
                         Row (modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
@@ -75,7 +83,7 @@ fun LibraryScreen(navController: NavHostController, bottomPadding: Dp){
                             }
                         )
                         {
-                            Text(text = exerciseElements[it].nazwa)
+                            Text(text = pobierane[it])
                         }
                     }
                 }
