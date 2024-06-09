@@ -92,7 +92,7 @@ fun BottomNavGraph(navController: NavHostController, bottomPadding: Dp){
         composable(route = Screens.AddExercisesToTrainingScreen.route){ AddExercisesToTrainingScreen() }
         composable(route = Screens.MainScreenBack.route){ MainScreenBack() }
         composable(route = Screens.MuscleTrainedScreen.route){ MuscleTraindedScreen() }
-        composable(route = Screens.TrainingListScreen.route){ TrainingListScreen() }
+        composable(route = Screens.TrainingListScreen.route){ TrainingListScreen(navController, bottomPadding) }
         composable(route = Screens.AddExerciseFront.route){ AddExercisesFrontScreen(navController, bottomPadding) }
         composable(route = Screens.AddExerciseBack.route){ AddExerciseBackScreen(navController, bottomPadding)}
     }

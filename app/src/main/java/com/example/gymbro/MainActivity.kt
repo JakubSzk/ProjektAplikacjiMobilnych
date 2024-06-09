@@ -1,5 +1,6 @@
 package com.example.gymbro
 
+import android.app.Application
 import android.os.Bundle
 import android.text.style.ClickableSpan
 import androidx.activity.ComponentActivity
@@ -24,12 +25,18 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gymbro.ui.theme.GymBroTheme
+import com.example.gymbro.ui.theme.model.AchiveElement
 import com.example.gymbro.ui.theme.model.InitiateMusclesIfNotExist
 import com.example.gymbro.ui.theme.model.Navigation
 import com.example.gymbro.ui.theme.view.MainScreenFront
+import com.example.gymbro.ui.theme.viewModel.AchiveViewModel
+import com.example.gymbro.ui.theme.viewModel.AchiveViewModelFactory
 import com.example.gymbro.ui.theme.viewModel.FrontHitboxes
 //space for global data
 var name_of_exercise: String = ""
@@ -50,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                   Navigation()
+                    Navigation()
                 }
             }
         }
