@@ -25,7 +25,9 @@ data class TrainingElement(
     val ilosc_powtorzen: Int,
     val e_id: Int,
     val masa: Float,
-    val data: String
+    val dzien: Int,
+    val miesiac: Int,
+    val rok: Int
 )
 @Dao
 interface TrainingDao {

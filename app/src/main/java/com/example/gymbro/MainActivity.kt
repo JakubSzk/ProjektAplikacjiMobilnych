@@ -31,8 +31,16 @@ import com.example.gymbro.ui.theme.model.InitiateMusclesIfNotExist
 import com.example.gymbro.ui.theme.model.Navigation
 import com.example.gymbro.ui.theme.view.MainScreenFront
 import com.example.gymbro.ui.theme.viewModel.FrontHitboxes
+//space for global data
+var name_of_exercise: String = ""
+var description_of_exercise: String = ""
+var length_of_exercise: String = "0.0"
+val list_of_selected_muscles: MutableList<String> = mutableListOf()
 
 class MainActivity : ComponentActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.gymbro.ui.theme.view.AchivementsScreen
+import com.example.gymbro.ui.theme.view.AddExercisesFrontScreen
 import com.example.gymbro.ui.theme.view.AddExercisesToTrainingScreen
 import com.example.gymbro.ui.theme.view.AddTrainingScreen
 import com.example.gymbro.ui.theme.view.LibraryScreen
@@ -45,6 +46,7 @@ sealed class Screens(val route: String) {
     object MuscleTrainedScreen : Screens("muscle_trained")
     object StatsScreen : Screens("stats")
     object TrainingListScreen : Screens("trainings")
+    object AddExerciseFront : Screens("adding_exercise")
 
 }
 
@@ -83,12 +85,13 @@ fun BottomNavGraph(navController: NavHostController, bottomPadding: Dp){
         composable(route = Screens.AchivementsScreen.route){ MainScreenBack() }
         composable(route = Screens.StatsScreen.route){ StatsScreen() }
         composable(route = Screens.MainScreenFront.route){ MainScreenFront() }
-        composable(route = Screens.LibraryScreen.route){ LibraryScreen() }
+        composable(route = Screens.LibraryScreen.route){ LibraryScreen(navController, bottomPadding) }
         composable(route = Screens.AddTrainingScreen.route){ AddTrainingScreen() }
         composable(route = Screens.AddExercisesToTrainingScreen.route){ AddExercisesToTrainingScreen() }
         composable(route = Screens.MainScreenBack.route){ MainScreenBack() }
         composable(route = Screens.MuscleTrainedScreen.route){ MuscleTraindedScreen() }
         composable(route = Screens.TrainingListScreen.route){ TrainingListScreen() }
+        composable(route = Screens.AddExerciseFront.route){ AddExercisesFrontScreen(navController, bottomPadding) }
     }
 }
 
