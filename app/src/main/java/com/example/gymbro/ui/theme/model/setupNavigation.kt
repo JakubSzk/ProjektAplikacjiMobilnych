@@ -84,7 +84,7 @@ fun BottomNavGraph(navController: NavHostController, bottomPadding: Dp){
         startDestination = Screens.MainScreenFront.route
 
     ) {
-        composable(route = Screens.AchivementsScreen.route){ MainScreenBack() }
+        composable(route = Screens.AchivementsScreen.route){ AchivementsScreen() }
         composable(route = Screens.StatsScreen.route){ StatsScreen() }
         composable(route = Screens.MainScreenFront.route){ MainScreenFront() }
         composable(route = Screens.LibraryScreen.route){ LibraryScreen(navController, bottomPadding) }

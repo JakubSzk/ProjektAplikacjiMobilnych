@@ -14,6 +14,7 @@ import androidx.room.RoomDatabase
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+
 @Entity(tableName = "achivements")
 data class AchiveElement(
     @PrimaryKey(autoGenerate = true) val id_a: Int,
@@ -57,3 +58,8 @@ abstract class AchiveDatabase : RoomDatabase() {
         }
     }
 }
+
+
+
+
+
