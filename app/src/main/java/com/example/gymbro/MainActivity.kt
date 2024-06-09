@@ -50,8 +50,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    InitiateMusclesIfNotExist()
-                    Navigation()
+                   Navigation()
                 }
             }
         }

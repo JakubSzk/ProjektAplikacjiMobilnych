@@ -27,7 +27,7 @@ data class MuscleElement(
 }
 @Dao
 interface MuscleDao {
-    @Query("SELECT * FROM muscle ORDER BY nazwa_miesnia ASC")
+    @Query("SELECT * FROM muscle ORDER BY id_m ASC")
     fun getMuscle(): Flow<List<MuscleElement>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
