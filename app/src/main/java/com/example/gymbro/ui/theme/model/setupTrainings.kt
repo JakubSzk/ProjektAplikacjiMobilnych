@@ -16,9 +16,7 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import java.sql.Date
 
-@Entity(tableName = "trainings", foreignKeys = [
-    ForeignKey(entity = ExerciseElement::class, parentColumns = ["id_e"], childColumns = ["e_id"])
-])
+@Entity(tableName = "trainingss")
 data class TrainingElement(
     @PrimaryKey(autoGenerate = true) val id_t: Int,
     val czas: Float,
@@ -31,13 +29,13 @@ data class TrainingElement(
 )
 @Dao
 interface TrainingDao {
-    @Query("SELECT * FROM trainings ORDER BY masa ASC")
+    @Query("SELECT * FROM trainingss ORDER BY masa ASC")
     fun getTraining(): Flow<List<TrainingElement>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: TrainingElement)
 
-    @Query("DELETE FROM trainings")
+    @Query("DELETE FROM trainingss")
     suspend fun deleteAll()
 
     @Update
@@ -57,7 +55,7 @@ abstract class TrainingDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): TrainingDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, TrainingDatabase::class.java, "trainings")
+                Room.databaseBuilder(context, TrainingDatabase::class.java, "trainingss")
                     .build()
                     .also { Instance = it }
             }

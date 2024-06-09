@@ -15,9 +15,7 @@ import androidx.room.RoomDatabase
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
-@Entity(tableName = "stats", foreignKeys = [
-    ForeignKey(entity = MuscleElement::class, parentColumns = ["id_m"], childColumns = ["m_id"])
-])
+@Entity(tableName = "statss")
 data class StatsElement(
     @PrimaryKey(autoGenerate = true) val id_s: Int,
     val nazwa: String,
@@ -31,13 +29,13 @@ data class StatsElement(
 }
 @Dao
 interface StatsDao {
-    @Query("SELECT * FROM stats ORDER BY nazwa ASC")
+    @Query("SELECT * FROM statss ORDER BY nazwa ASC")
     fun getStats(): Flow<List<StatsElement>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: StatsElement)
 
-    @Query("DELETE FROM stats")
+    @Query("DELETE FROM statss")
     suspend fun deleteAll()
 
     @Update
@@ -57,7 +55,7 @@ abstract class StatsDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): StatsDatabase {
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, StatsDatabase::class.java, "stats")
+                Room.databaseBuilder(context, StatsDatabase::class.java, "statss")
                     .build()
                     .also { Instance = it }
             }

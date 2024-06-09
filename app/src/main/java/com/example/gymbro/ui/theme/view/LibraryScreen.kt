@@ -41,7 +41,7 @@ fun LibraryScreen(navController: NavHostController, bottomPadding: Dp){
         "UserViewModelExercise",
         ExerciseViewModelFactory(LocalContext.current.applicationContext as Application)
     )
-
+    viewModelExercise.fetchExercise2()
     val exerciseElements by viewModelExercise.usersState.collectAsStateWithLifecycle()
 
     Scaffold ( modifier = Modifier.padding(bottom = bottomPadding),

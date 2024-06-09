@@ -26,6 +26,11 @@ class ExerciseRepository(exerciseDaoo: ExerciseDao) {
         return exerciseDao.getExercise()
     }
 
+    fun getExercise2(): Flow<List<ExerciseElement>> {
+        return exerciseDao.getExercise2()
+    }
+
+
     suspend fun insert(exercise: ExerciseElement) {
         exerciseDao.insert(exercise)
     }
@@ -60,6 +65,13 @@ class ExerciseViewModel(application: Application) : ViewModel() {
     private fun fetchExercise() {
         viewModelScope.launch {
             repository.getExercise().collect { exercise ->
+                _exerciseState.value = exercise
+            }
+        }
+    }
+    fun fetchExercise2() {
+        viewModelScope.launch {
+            repository.getExercise2().collect { exercise ->
                 _exerciseState.value = exercise
             }
         }
