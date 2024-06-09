@@ -27,6 +27,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gymbro.ui.theme.GymBroTheme
+import com.example.gymbro.ui.theme.model.InitiateMusclesIfNotExist
 import com.example.gymbro.ui.theme.model.Navigation
 import com.example.gymbro.ui.theme.view.MainScreenFront
 import com.example.gymbro.ui.theme.viewModel.FrontHitboxes
@@ -41,6 +42,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    InitiateMusclesIfNotExist()
                     Navigation()
                 }
             }

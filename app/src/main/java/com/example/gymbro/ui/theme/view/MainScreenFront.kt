@@ -3,6 +3,7 @@ package com.example.gymbro.ui.theme.view
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,30 +19,34 @@ import com.example.gymbro.ui.theme.viewModel.FrontHitboxes
 
 @Composable
 fun MainScreenFront(modifier: Modifier = Modifier.fillMaxSize()) {
-    val zmienna = 5f
+    val zmienna = 6.5f
     val miesnie = FrontHitboxes(zmienna)
     var selectedMuscle by remember { mutableStateOf("") }
 
-    Canvas(modifier = Modifier.size((zmienna*210).dp, (zmienna*297).dp)
+    Canvas(modifier = Modifier.offset(x = (-50).dp).size((zmienna*210).dp, (zmienna*297).dp)
         .pointerInput(Unit) {
             detectTapGestures(
                 onTap = {tapOffset ->
                     var index = 0
                     //var porown: Pair<Float, Float> = Pair<Float, Float>(tapOffset.x, tapOffset.y)
 
-                    val prawa: Boolean = tapOffset.x > 525
+                    val prawa: Boolean = tapOffset.x > 2
                     for (miesien in miesnie.miesnie)
                     {
-                        var counter: Int = 0
+                        var counter: Int = zmienna.toInt()*(81 + 130)/2
                         for (trojkot in miesien.value)
                         {
-                            val d1 = tapOffset.x*(trojkot.first.second-trojkot.second.second) + tapOffset.y*(trojkot.second.first-trojkot.first.first) + (trojkot.first.first*trojkot.second.second-trojkot.first.second*trojkot.second.first)
-                            val d2 = tapOffset.x*(trojkot.second.second-trojkot.third.second) + tapOffset.y*(trojkot.third.first-trojkot.second.first) + (trojkot.second.first*trojkot.third.second-trojkot.second.second*trojkot.third.first)
-                            val d3 = tapOffset.x*(trojkot.third.second-trojkot.first.second) + tapOffset.y*(trojkot.first.first-trojkot.third.first) + (trojkot.third.first*trojkot.first.second-trojkot.third.second*trojkot.first.first)
-                            if ((d1<=0)&&(d2<=0)&&(d3<=0) || (d1>=0)&&(d2>=0)&&(d3>=0) )
-                            {
-                                println(miesien.key)
-                                selectedMuscle = miesien.key
+                            if(counter % 2 == 1 && prawa || counter % 2 == 0 && !prawa) {
+                                val d1 =
+                                    tapOffset.x * (trojkot.first.second - trojkot.second.second) + tapOffset.y * (trojkot.second.first - trojkot.first.first) + (trojkot.first.first * trojkot.second.second - trojkot.first.second * trojkot.second.first)
+                                val d2 =
+                                    tapOffset.x * (trojkot.second.second - trojkot.third.second) + tapOffset.y * (trojkot.third.first - trojkot.second.first) + (trojkot.second.first * trojkot.third.second - trojkot.second.second * trojkot.third.first)
+                                val d3 =
+                                    tapOffset.x * (trojkot.third.second - trojkot.first.second) + tapOffset.y * (trojkot.first.first - trojkot.third.first) + (trojkot.third.first * trojkot.first.second - trojkot.third.second * trojkot.first.first)
+                                if ((d1 <= 0) && (d2 <= 0) && (d3 <= 0) || (d1 >= 0) && (d2 >= 0) && (d3 >= 0)) {
+                                    println(miesien.key)
+                                    selectedMuscle = miesien.key
+                                }
                             }
                         }
                     }
@@ -189,6 +194,234 @@ fun MainScreenFront(modifier: Modifier = Modifier.fillMaxSize()) {
         path5.relativeCubicTo(zmienna*-1.331736F, zmienna*-1.887736F, zmienna*-3.622849F, zmienna*-4.248305F, zmienna*-5.353162F, zmienna*-4.357357F)
         path5.close()
 
+        val path6 = Path()
+
+        path6.relativeMoveTo(zmienna*80.666911F, zmienna*64.71698F)
+        path6.relativeCubicTo(zmienna*-7.938882F, zmienna*-0.02337F, zmienna*-10.278182F, zmienna*5.067856F, zmienna*-10.519772F, zmienna*10.284127F)
+        path6.relativeCubicTo(zmienna*-0.224719F, zmienna*4.852309F, zmienna*1.098695F, zmienna*13.935346F, zmienna*2.014865F, zmienna*14.432711F)
+        path6.relativeCubicTo(zmienna*0.405659F, zmienna*0.220219F, zmienna*3.547317F, zmienna*-1.94751F, zmienna*3.708817F, zmienna*-3.549655F)
+        path6.relativeCubicTo(zmienna*0.07477F, zmienna*-0.741785F, zmienna*-2.695838F, zmienna*-5.524216F, zmienna*-3.389457F, zmienna*-8.377266F)
+        path6.relativeCubicTo(zmienna*-0.623049F, zmienna*-2.562749F, zmienna*0.08738F, zmienna*-4.521682F, zmienna*1.21543F, zmienna*-6.362919F)
+        path6.relativeCubicTo(zmienna*2.142947F, zmienna*-3.497776F, zmienna*7.454956F, zmienna*-6.425598F, zmienna*6.970117F, zmienna*-6.426998F)
+        path6.close()
+        path6.relativeMoveTo(zmienna*50.749869F, zmienna*0.128158F)
+        path6.relativeCubicTo(zmienna*-0.48483F, zmienna*0.0014F, zmienna*4.82717F, zmienna*2.929222F, zmienna*6.97012F, zmienna*6.426997F)
+        path6.relativeCubicTo(zmienna*1.12805F, zmienna*1.841238F, zmienna*1.83848F, zmienna*3.80017F, zmienna*1.21543F, zmienna*6.36292F)
+        path6.relativeCubicTo(zmienna*-0.69362F, zmienna*2.85305F, zmienna*-3.46423F, zmienna*7.635481F, zmienna*-3.38946F, zmienna*8.377266F)
+        path6.relativeCubicTo(zmienna*0.1615F, zmienna*1.602144F, zmienna*3.30316F, zmienna*3.769357F, zmienna*3.70882F, zmienna*3.549137F)
+        path6.relativeCubicTo(zmienna*0.91617F, zmienna*-0.497364F, zmienna*2.23959F, zmienna*-9.580401F, zmienna*2.01487F, zmienna*-14.43271F)
+        path6.relativeCubicTo(zmienna*-0.24159F, zmienna*-5.216271F, zmienna*-2.58089F, zmienna*-10.306976F, zmienna*-10.51978F, zmienna*-10.28361F)
+        path6.close()
+
+        val path7 = Path()
+
+        path7.relativeMoveTo(zmienna*129.97966F, zmienna*80.120174F)
+        path7.relativeCubicTo(zmienna*-0.0897F, zmienna*0.0095F, zmienna*-0.17149F, zmienna*0.04189F, zmienna*-0.24546F, zmienna*0.0987F)
+        path7.relativeCubicTo(zmienna*-5.82334F, zmienna*4.47266F, zmienna*1.98802F, zmienna*30.640436F, zmienna*9.45059F, zmienna*24.870836F)
+        path7.relativeCubicTo(zmienna*3.59435F, zmienna*-3.45126F, zmienna*-6.42358F, zmienna*-25.262526F, zmienna*-9.20513F, zmienna*-24.969538F)
+        path7.close()
+        path7.relativeMoveTo(zmienna*-48.002235F, zmienna*0.128158F)
+        path7.relativeCubicTo(zmienna*-2.781544F, zmienna*-0.292988F, zmienna*-12.799472F, zmienna*21.517758F, zmienna*-9.205123F, zmienna*24.969018F)
+        path7.relativeCubicTo(zmienna*7.462563F, zmienna*5.7696F, zmienna*15.274447F, zmienna*-20.397657F, zmienna*9.451103F, zmienna*-24.870316F)
+        path7.relativeCubicTo(zmienna*-0.07397F, zmienna*-0.05681F, zmienna*-0.156253F, zmienna*-0.08925F, zmienna*-0.24598F, zmienna*-0.0987F)
+        path7.close()
+
+        val path8 = Path()
+
+        path8.relativeMoveTo(zmienna*135.33541F, zmienna*85.931706F)
+        path8.relativeCubicTo(zmienna*-0.0614F, zmienna*-0.007F, zmienna*-0.0907F, zmienna*0.02805F, zmienna*-0.0816F, zmienna*0.112654F)
+        path8.relativeCubicTo(zmienna*0.35947F, zmienna*3.370123F, zmienna*3.79216F, zmienna*5.333202F, zmienna*5.40329F, zmienna*18.19372F)
+        path8.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*1.92715F, zmienna*2.44424F, zmienna*2.11046F, zmienna*1.34307F)
+        path8.relativeCubicTo(zmienna*0.79876F, zmienna*-4.79826F, zmienna*-1.22943F, zmienna*-13.904993F, zmienna*-2.30218F, zmienna*-14.804779F)
+        path8.relativeCubicTo(zmienna*-0.94608F, zmienna*-0.793542F, zmienna*-4.5366F, zmienna*-4.77653F, zmienna*-5.12992F, zmienna*-4.844665F)
+        path8.close()
+        path8.relativeMoveTo(zmienna*-58.669805F, zmienna*0.271301F)
+        path8.relativeCubicTo(zmienna*-0.593322F, zmienna*0.06813F, zmienna*-4.183841F, zmienna*4.051123F, zmienna*-5.12992F, zmienna*4.844666F)
+        path8.relativeCubicTo(zmienna*-1.072749F, zmienna*0.899786F, zmienna*-3.100944F, zmienna*10.006517F, zmienna*-2.302185F, zmienna*14.804777F)
+        path8.relativeCubicTo(zmienna*0.18331F, zmienna*1.10117F, zmienna*2.109949F, zmienna*-1.34307F, zmienna*2.109949F, zmienna*-1.34307F)
+        path8.relativeCubicTo(zmienna*1.611128F, zmienna*-12.860521F, zmienna*5.044335F, zmienna*-14.823596F, zmienna*5.403804F, zmienna*-18.193718F)
+        path8.relativeCubicTo(zmienna*0.009F, zmienna*-0.08461F, zmienna*-0.02027F, zmienna*-0.119703F, zmienna*-0.08165F, zmienna*-0.112655F)
+        path8.close()
+
+        val path9 = Path()
+
+        path9.relativeMoveTo(zmienna*154.59056F, zmienna*141.90968F)
+        path9.relativeCubicTo(zmienna*-1.94884F, zmienna*0.0272F, zmienna*-4.38278F, zmienna*1.9272F, zmienna*-5.90765F, zmienna*2.93626F)
+        path9.relativeCubicTo(zmienna*-3.38323F, zmienna*2.23883F, zmienna*3.6836F, zmienna*18.78017F, zmienna*8.50543F, zmienna*13.36559F)
+        path9.relativeCubicTo(zmienna*7.08773F, zmienna*-7.95901F, zmienna*1.70396F, zmienna*-14.17075F, zmienna*-1.34307F, zmienna*-15.98765F)
+        path9.relativeCubicTo(zmienna*-0.38091F, zmienna*-0.22713F, zmienna*-0.80497F, zmienna*-0.32048F, zmienna*-1.25471F, zmienna*-0.3142F)
+        path9.close()
+        path9.relativeMoveTo(zmienna*-97.335657F, zmienna*0.23255F)
+        path9.relativeCubicTo(zmienna*-0.449733F, zmienna*-0.006F, zmienna*-0.873792F, zmienna*0.0871F, zmienna*-1.254704F, zmienna*0.31419F)
+        path9.relativeCubicTo(zmienna*-3.047037F, zmienna*1.8169F, zmienna*-8.430286F, zmienna*8.02813F, zmienna*-1.342553F, zmienna*15.98714F)
+        path9.relativeCubicTo(zmienna*4.821825F, zmienna*5.41457F, zmienna*11.888144F, zmienna*-11.12625F, zmienna*8.504907F, zmienna*-13.36508F)
+        path9.relativeCubicTo(zmienna*-1.524866F, zmienna*-1.00906F, zmienna*-3.958804F, zmienna*-2.90901F, zmienna*-5.90765F, zmienna*-2.93625F)
+        path9.close()
+
+        val path10 = Path()
+
+        path10.relativeMoveTo(zmienna*115.74803F, zmienna*40.290347F)
+        path10.relativeCubicTo(zmienna*0.38913F, zmienna*2.346069F, zmienna*-0.56944F, zmienna*13.000492F, zmienna*-1.90469F, zmienna*13.929799F)
+        path10.relativeCubicTo(zmienna*-5.22209F, zmienna*3.634462F, zmienna*-11.15181F, zmienna*3.654476F, zmienna*-16.262483F, zmienna*-0.435734F)
+        path10.relativeCubicTo(zmienna*-1.03254F, zmienna*-0.826371F, zmienna*-1.535086F, zmienna*-11.049943F, zmienna*-1.367548F, zmienna*-13.313188F)
+        path10.relativeCubicTo(zmienna*0.550372F, zmienna*-7.434892F, zmienna*18.241921F, zmienna*-7.975101F, zmienna*19.534721F, zmienna*-0.180877F)
+        path10.close()
+
+        val path11 = Path()
+
+        path11.relativeMoveTo(zmienna*125.65641F, zmienna*132.66684F)
+        path11.relativeMoveTo(zmienna*-11.39517F, zmienna*13.11341F)
+        path11.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-2.25099F, zmienna*8.06846F, zmienna*-7.41608F, zmienna*10.49083F)
+        path11.relativeCubicTo(zmienna*-1.15895F, zmienna*0.54353F, zmienna*3.65761F, zmienna*29.16814F, zmienna*4.70307F, zmienna*29.48296F)
+        path11.relativeCubicTo(zmienna*8.81433F, zmienna*-15.30925F, zmienna*10.98554F, zmienna*-35.72223F, zmienna*14.10818F, zmienna*-53.0872F)
+        path11.close()
+        path11.moveTo(zmienna*125.65641F, zmienna*132.66684F)
+        path11.relativeMoveTo(zmienna*-39.111822F, zmienna*0.22944F)
+        path11.relativeCubicTo(zmienna*3.122652F, zmienna*17.36497F, zmienna*5.293848F, zmienna*37.77796F, zmienna*14.108182F, zmienna*53.0872F)
+        path11.relativeCubicTo(zmienna*1.04546F, zmienna*-0.31482F, zmienna*5.86151F, zmienna*-29.2593F, zmienna*4.70256F, zmienna*-29.80283F)
+        path11.relativeCubicTo(zmienna*-5.16509F, zmienna*-2.42237F, zmienna*-7.415572F, zmienna*-10.17096F, zmienna*-7.415572F, zmienna*-10.17096F)
+        path11.close()
+
+        val path12 = Path()
+
+        path12.relativeMoveTo(zmienna*117.29878F, zmienna*174.63689F)
+        path12.relativeMoveTo(zmienna*-5.15524F, zmienna*10.943F)
+        path12.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-2.16166F, zmienna*13.30852F, zmienna*4.97438F, zmienna*12.48037F)
+        path12.relativeCubicTo(zmienna*4.46754F, zmienna*-0.51847F, zmienna*0.33878F, zmienna*-19.77467F, zmienna*0.18086F, zmienna*-23.42337F)
+        path12.close()
+        path12.moveTo(zmienna*117.29878F, zmienna*174.63689F)
+        path12.relativeMoveTo(zmienna*-22.474594F, zmienna*0.045F)
+        path12.relativeCubicTo(zmienna*-0.15792F, zmienna*3.64871F, zmienna*-4.286681F, zmienna*22.90543F, zmienna*0.180868F, zmienna*23.4239F)
+        path12.relativeCubicTo(zmienna*7.136036F, zmienna*0.82815F, zmienna*4.973856F, zmienna*-12.48089F, zmienna*4.973856F, zmienna*-12.48089F)
+        path12.close()
+
+        val path13 = Path()
+
+        path13.relativeMoveTo(zmienna*88.350163F, zmienna*146.28668F)
+        path13.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-0.786517F, zmienna*13.65274F, zmienna*-0.180868F, zmienna*20.43906F)
+        path13.relativeCubicTo(zmienna*0.64909F, zmienna*7.27299F, zmienna*4.069519F, zmienna*21.52427F, zmienna*4.069519F, zmienna*21.52427F)
+        path13.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*2.99137F, zmienna*-12.7986F, zmienna*2.261361F, zmienna*-15.19339F)
+        path13.relativeCubicTo(zmienna*-2.996467F, zmienna*-9.82983F, zmienna*-4.365604F, zmienna*-17.61766F, zmienna*-6.150012F, zmienna*-26.76994F)
+        path13.close()
+        path13.relativeMoveTo(zmienna*35.369937F, zmienna*0.22376F)
+        path13.relativeCubicTo(zmienna*-1.78441F, zmienna*9.15228F, zmienna*-3.15355F, zmienna*16.94011F, zmienna*-6.15002F, zmienna*26.76994F)
+        path13.relativeCubicTo(zmienna*-0.73F, zmienna*2.39479F, zmienna*2.26085F, zmienna*15.19339F, zmienna*2.26085F, zmienna*15.19339F)
+        path13.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*3.42095F, zmienna*-14.25128F, zmienna*4.07003F, zmienna*-21.52427F)
+        path13.relativeCubicTo(zmienna*0.60565F, zmienna*-6.78632F, zmienna*-0.18086F, zmienna*-20.43906F, zmienna*-0.18086F, zmienna*-20.43906F)
+        path13.close()
+
+        val path14 = Path()
+
+        path14.relativeMoveTo(zmienna*126.43311F, zmienna*132.49217F)
+        path14.relativeCubicTo(zmienna*-4.72597F, zmienna*18.92541F, zmienna*-0.97914F, zmienna*12.60466F, zmienna*-1.53737F, zmienna*30.65911F)
+        path14.relativeCubicTo(zmienna*-0.62707F, zmienna*9.74659F, zmienna*-7.40841F, zmienna*28.99057F, zmienna*-0.63304F, zmienna*32.2864F)
+        path14.relativeCubicTo(zmienna*0.81327F, zmienna*0.39561F, zmienna*2.45958F, zmienna*0.86815F, zmienna*2.71301F, zmienna*0F)
+        path14.relativeCubicTo(zmienna*3.2951F, zmienna*-11.2879F, zmienna*4.57401F, zmienna*-25.4417F, zmienna*4.06952F, zmienna*-38.25554F)
+        path14.relativeCubicTo(zmienna*-0.32936F, zmienna*-8.36579F, zmienna*-4.61212F, zmienna*-24.68997F, zmienna*-4.61212F, zmienna*-24.68997F)
+        path14.close()
+        path14.relativeMoveTo(zmienna*-40.774773F, zmienna*0.45217F)
+        path14.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-4.282762F, zmienna*16.32417F, zmienna*-4.612121F, zmienna*24.68997F)
+        path14.relativeCubicTo(zmienna*-0.50449F, zmienna*12.81384F, zmienna*0.774422F, zmienna*26.96764F, zmienna*4.069519F, zmienna*38.25554F)
+        path14.relativeCubicTo(zmienna*0.25343F, zmienna*0.86815F, zmienna*1.899743F, zmienna*0.39561F, zmienna*2.713013F, zmienna*0F)
+        path14.relativeCubicTo(zmienna*6.775373F, zmienna*-3.29583F, zmienna*-0.006F, zmienna*-22.53981F, zmienna*-0.633037F, zmienna*-32.2864F)
+        path14.relativeCubicTo(zmienna*-0.558229F, zmienna*-18.05445F, zmienna*3.188592F, zmienna*-11.7337F, zmienna*-1.537374F, zmienna*-30.65911F)
+        path14.close()
+
+        val path15 = Path()
+
+        path15.relativeMoveTo(zmienna*115.36505F, zmienna*208.73196F)
+        path15.relativeCubicTo(zmienna*0.30327F, zmienna*11.5243F, zmienna*-3.62673F, zmienna*16.47879F, zmienna*-2.42982F, zmienna*20.97547F)
+        path15.relativeCubicTo(zmienna*1.75682F, zmienna*6.60026F, zmienna*4.34857F, zmienna*20.46386F, zmienna*4.34857F, zmienna*20.46386F)
+        path15.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*6.23734F, zmienna*-16.48066F, zmienna*5.37176F, zmienna*-24.94059F)
+        path15.relativeCubicTo(zmienna*-0.61199F, zmienna*-5.9814F, zmienna*-7.29051F, zmienna*-16.49874F, zmienna*-7.29051F, zmienna*-16.49874F)
+        path15.close()
+        path15.relativeMoveTo(zmienna*-18.889802F, zmienna*0.0904F)
+        path15.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-6.678005F, zmienna*10.51734F, zmienna*-7.289994F, zmienna*16.49873F)
+        path15.relativeCubicTo(zmienna*-0.865579F, zmienna*8.45993F, zmienna*5.371765F, zmienna*24.9406F, zmienna*5.371765F, zmienna*24.9406F)
+        path15.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*2.591744F, zmienna*-13.86361F, zmienna*4.348572F, zmienna*-20.46387F)
+        path15.relativeCubicTo(zmienna*1.196909F, zmienna*-4.49668F, zmienna*-2.733612F, zmienna*-9.45117F, zmienna*-2.430343F, zmienna*-20.97546F)
+        path15.close()
+
+        val path16 = Path()
+
+        path16.relativeMoveTo(zmienna*85.525012F, zmienna*204.66244F)
+        path16.relativeCubicTo(zmienna*0F, zmienna*0F,zmienna*-1.487908F, zmienna*5.92329F,zmienna*-1.627807F, zmienna*8.95346F)
+        path16.relativeCubicTo(zmienna*-0.28612F, zmienna*6.19714F, zmienna*0.485468F, zmienna*12.4423F, zmienna*1.627807F, zmienna*18.53996F)
+        path16.relativeCubicTo(zmienna*1.352679F, zmienna*7.2204F, zmienna*6.150012F, zmienna*21.16253F, zmienna*6.150012F, zmienna*21.16253F)
+        path16.relativeLineTo(zmienna*-3.255615F,zmienna*-27.71976F)
+        path16.close()
+        path16.moveTo(zmienna*85.525012F, zmienna*204.66244F)
+        path16.relativeMoveTo(zmienna*40.636798F, zmienna*0F)
+        path16.relativeMoveTo(zmienna*-2.8944F, zmienna*20.93619F)
+        path16.relativeMoveTo(zmienna*-3.25561F, zmienna*27.71976F)
+        path16.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*4.79733F,zmienna*-13.94213F, zmienna*6.15001F,zmienna*-21.16253F)
+        path16.relativeCubicTo(zmienna*1.14234F, zmienna*-6.09766F, zmienna*1.91393F,zmienna*-12.34282F, zmienna*1.62781F,zmienna*-18.53996F)
+        path16.relativeCubicTo(zmienna*-0.1399F, zmienna*-3.03017F, zmienna*-1.62781F,zmienna*-8.95346F,zmienna*-1.62781F,zmienna*-8.95346F)
+        path16.close()
+
+        val path17 = Path()
+
+        path17.relativeMoveTo(zmienna*83.594897F, zmienna*213.46397F)
+        path17.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-2.000458F, zmienna*9.98757F, zmienna*-1.790588F, zmienna*15.02803F)
+        path17.relativeCubicTo(zmienna*0.35393F, zmienna*8.50007F, zmienna*5.115967F, zmienna*25.00467F, zmienna*5.115967F, zmienna*25.00467F)
+        path17.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*3.155343F, zmienna*-4.13568F, zmienna*2.366264F, zmienna*-6.20324F)
+        path17.relativeCubicTo(zmienna*-4.322646F, zmienna*-11.27764F, zmienna*-4.827893F, zmienna*-22.0248F, zmienna*-5.691643F, zmienna*-33.82946F)
+        path17.close()
+        path17.relativeMoveTo(zmienna*44.560073F, zmienna*0.12816F)
+        path17.relativeCubicTo(zmienna*-0.86375F, zmienna*11.80466F, zmienna*-1.36848F, zmienna*22.5513F, zmienna*-5.69113F, zmienna*33.82894F)
+        path17.relativeCubicTo(zmienna*-0.78908F, zmienna*2.06756F, zmienna*2.36575F, zmienna*6.20324F, zmienna*2.36575F, zmienna*6.20324F)
+        path17.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*4.76204F, zmienna*-16.50408F, zmienna*5.11597F, zmienna*-25.00416F)
+        path17.relativeCubicTo(zmienna*0.20987F, zmienna*-5.04045F, zmienna*-1.79059F, zmienna*-15.02802F, zmienna*-1.79059F, zmienna*-15.02802F)
+        path17.close()
+
+        val path18 = Path()
+
+        path18.relativeMoveTo(zmienna*124.80511F, zmienna*253.95127F)
+        path18.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-0.019F, zmienna*2.37185F, zmienna*4.7028F, zmienna*4.88368F)
+        path18.relativeCubicTo(zmienna*4.59856F, zmienna*2.44625F, zmienna*8.29052F, zmienna*3.02952F, zmienna*9.58649F, zmienna*3.93408F)
+        path18.relativeCubicTo(zmienna*1.90842F, zmienna*1.33204F, zmienna*2.77248F, zmienna*3.71508F, zmienna*0.4974F, zmienna*4.20539F)
+        path18.relativeCubicTo(zmienna*-7.80344F, zmienna*1.68175F, zmienna*-9.92209F, zmienna*-2.44461F, zmienna*-23.7401F, zmienna*-3.43666F)
+        path18.relativeCubicTo(zmienna*-3.68602F, zmienna*-0.26463F, zmienna*1.26614F, zmienna*-12.93271F, zmienna*1.26614F, zmienna*-12.93271F)
+
+        val path19 = Path()
+
+        path19.relativeMoveTo(zmienna*86.930428F, zmienna*253.6283F)
+        path19.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*0.019F, zmienna*2.37185F, zmienna*-4.7028F, zmienna*4.88368F)
+        path19.relativeCubicTo(zmienna*-4.59856F, zmienna*2.44625F, zmienna*-8.29052F, zmienna*3.02952F, zmienna*-9.58649F, zmienna*3.93408F)
+        path19.relativeCubicTo(zmienna*-1.90842F, zmienna*1.33204F, zmienna*-2.77248F, zmienna*3.71508F, zmienna*-0.4974F, zmienna*4.20539F)
+        path19.relativeCubicTo(zmienna*7.80344F, zmienna*1.68175F, zmienna*9.92209F, zmienna*-2.44461F, zmienna*23.7401F, zmienna*-3.43666F)
+        path19.relativeCubicTo(zmienna*3.68602F, zmienna*-0.26463F, zmienna*-1.26614F, zmienna*-12.93271F, zmienna*-1.26614F, zmienna*-12.93271F)
+
+        val path20 = Path()
+
+        path20.relativeMoveTo(zmienna*68.443884F, zmienna*103.6469F)
+        path20.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-5.056467F, zmienna*6.59807F, zmienna*-6.240446F, zmienna*10.49084F)
+        path20.relativeCubicTo(zmienna*-2.373277F, zmienna*7.80305F, zmienna*-3.970751F, zmienna*20.2441F, zmienna*-3.888651F, zmienna*27.22211F)
+        path20.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*9.283988F, zmienna*-22.5004F, zmienna*11.304736F, zmienna*-28.75949F)
+        path20.relativeCubicTo(zmienna*0.924799F, zmienna*-2.86449F, zmienna*-1.175639F, zmienna*-8.95346F, zmienna*-1.175639F, zmienna*-8.95346F)
+        path20.close()
+        path20.relativeMoveTo(zmienna*74.991806F, zmienna*0.17674F)
+        path20.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-2.10096F, zmienna*6.08844F, zmienna*-1.17616F, zmienna*8.95294F)
+        path20.relativeCubicTo(zmienna*2.02075F, zmienna*6.25908F, zmienna*11.30526F, zmienna*28.75948F, zmienna*11.30526F, zmienna*28.75948F)
+        path20.relativeCubicTo(zmienna*0.0821F, zmienna*-6.978F, zmienna*-1.51589F, zmienna*-19.41854F, zmienna*-3.88917F, zmienna*-27.22159F)
+        path20.relativeCubicTo(zmienna*-1.18398F, zmienna*-3.89277F, zmienna*-6.23993F, zmienna*-10.49083F, zmienna*-6.23993F, zmienna*-10.49083F)
+        path20.close()
+
+        val path21 = Path()
+
+        path21.relativeMoveTo(zmienna*70.820483F, zmienna*109.97313F)
+        path21.relativeMoveTo(zmienna*-11.440645F, zmienna*30.83946F)
+        path21.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*2.823105F, zmienna*3.54723F, zmienna*3.391524F, zmienna*2.3518F)
+        path21.relativeCubicTo(zmienna*6.915913F, zmienna*-14.54478F, zmienna*14.246013F, zmienna*-19.27973F, zmienna*13.475664F, zmienna*-27.49341F)
+        path21.relativeCubicTo(zmienna*-0.25877F, zmienna*-2.75904F, zmienna*-5.426543F, zmienna*-5.69785F, zmienna*-5.426543F, zmienna*-5.69785F)
+        path21.close()
+        path21.moveTo(zmienna*70.820483F, zmienna*109.97313F)
+        path21.relativeMoveTo(zmienna*70.353847F, zmienna*0.36174F)
+        path21.relativeCubicTo(zmienna*0F, zmienna*0F, zmienna*-5.16726F, zmienna*2.9388F, zmienna*-5.42603F, zmienna*5.69784F)
+        path21.relativeCubicTo(zmienna*-0.77035F, zmienna*8.21368F, zmienna*6.55924F, zmienna*12.94864F, zmienna*13.47515F, zmienna*27.49341F)
+        path21.relativeCubicTo(zmienna*0.56842F, zmienna*1.19543F, zmienna*3.39152F, zmienna*-2.35179F, zmienna*3.39152F, zmienna*-2.35179F)
+        path21.close()
+
         drawPath( //brzuch
             path = path,
             color =  if (selectedMuscle == "brzuch") Color.Green else Color.Black
@@ -212,6 +445,70 @@ fun MainScreenFront(modifier: Modifier = Modifier.fillMaxSize()) {
         drawPath( //boki
             path = path5,
             color = if (selectedMuscle == "boki") Color.Green else Color.Black
+        )
+        drawPath( //barki_szersze
+            path = path6,
+            color =  if (selectedMuscle == "barki_szersze") Color.Green else Color.Black
+        )
+        drawPath( //biceps
+            path = path7,
+            color =  if (selectedMuscle == "biceps") Color.Green else Color.Black
+        )
+        drawPath( //triceps
+            path = path8,
+            color =  if (selectedMuscle == "triceps") Color.Green else Color.Black
+        )
+        drawPath( //dlon
+            path = path9,
+            color =  if (selectedMuscle == "dlon") Color.Green else Color.Black
+        )
+        drawPath( //glowa
+            path = path10,
+            color = Color.LightGray
+        )
+        drawPath( //uda1
+            path = path11,
+            color =  if (selectedMuscle == "uda1") Color.Green else Color.Black
+        )
+        drawPath( //uda4
+            path = path12,
+            color =  if (selectedMuscle == "uda4") Color.Green else Color.Black
+        )
+        drawPath( //uda2
+            path = path13,
+            color =  if (selectedMuscle == "uda2") Color.Green else Color.Black
+        )
+        drawPath( //uda3
+            path = path14,
+            color =  if (selectedMuscle == "uda3") Color.Green else Color.Black
+        )
+        drawPath( //lydy1
+            path = path15,
+            color =  if (selectedMuscle == "lydy1") Color.Green else Color.Black
+        )
+        drawPath( //lydy2
+            path = path16,
+            color =  if (selectedMuscle == "lydy2") Color.Green else Color.Black
+        )
+        drawPath( //lydy3
+            path = path17,
+            color =  if (selectedMuscle == "lydy3") Color.Green else Color.Black
+        )
+        drawPath( //stopap
+            path = path18,
+            color =  Color.LightGray
+        )
+        drawPath( //stopal
+            path = path19,
+            color =  Color.LightGray
+        )
+        drawPath( //przedramie_gorne
+            path = path20,
+            color =  if (selectedMuscle == "przedramie_gorne") Color.Green else Color.Black
+        )
+        drawPath( //przedramie_dolne
+            path = path21,
+            color =  if (selectedMuscle == "przedramie_dolne") Color.Green else Color.Black
         )
     }
 }

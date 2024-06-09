@@ -47,7 +47,7 @@ interface StatsDao {
     suspend fun delete(stats: StatsElement)
 }
 
-@Database(entities = [StatsElement::class], version = 1, exportSchema = false)
+@Database(entities = [StatsElement::class, MuscleElement::class], version = 1, exportSchema = false)
 abstract class StatsDatabase : RoomDatabase() {
     abstract fun statsDao(): StatsDao
 

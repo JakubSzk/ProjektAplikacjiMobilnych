@@ -25,7 +25,7 @@ data class TrainingElement(
     val ilosc_powtorzen: Int,
     val e_id: Int,
     val masa: Float,
-    val data: Date
+    val data: String
 )
 @Dao
 interface TrainingDao {
@@ -45,7 +45,7 @@ interface TrainingDao {
     suspend fun delete(training: TrainingElement)
 }
 
-@Database(entities = [TrainingElement::class], version = 1, exportSchema = false)
+@Database(entities = [TrainingElement::class, ExerciseElement::class, MuscleElement::class], version = 1, exportSchema = false)
 abstract class TrainingDatabase : RoomDatabase() {
     abstract fun trainingDao(): TrainingDao
 

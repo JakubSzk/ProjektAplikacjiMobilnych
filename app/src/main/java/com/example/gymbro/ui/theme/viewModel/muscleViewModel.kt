@@ -87,4 +87,14 @@ class MuscleViewModel(application: Application) : ViewModel() {
             repository.update(muscle)
         }
     }
+
+    public var emptyBool = false
+    fun isItEmpty() {
+        viewModelScope.launch {
+            repository.getMuscle().collect { muscles ->
+                emptyBool = muscles.isEmpty()
+            }
+        }
+    }
+
 }

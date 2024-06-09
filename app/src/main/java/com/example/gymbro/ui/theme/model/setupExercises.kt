@@ -42,7 +42,7 @@ interface ExerciseDao {
     suspend fun delete(exercise: ExerciseElement)
 }
 
-@Database(entities = [ExerciseElement::class], version = 1, exportSchema = false)
+@Database(entities = [ExerciseElement::class, MuscleElement::class], version = 1, exportSchema = false)
 abstract class ExerciseDatabase : RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
 
