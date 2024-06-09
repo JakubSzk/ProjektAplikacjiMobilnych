@@ -42,8 +42,8 @@ import com.example.gymbro.ui.theme.viewModel.FrontHitboxes
 var name_of_exercise: String = ""
 var description_of_exercise: String = ""
 var length_of_exercise: String = "0.0"
-val list_of_selected_muscles: MutableList<String> = mutableListOf()
-
+var list_of_selected_muscles: MutableList<String> = mutableListOf()
+var klikniety: String = ""
 class MainActivity : ComponentActivity() {
 
 

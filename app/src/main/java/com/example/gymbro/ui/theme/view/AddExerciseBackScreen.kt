@@ -44,6 +44,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.gymbro.description_of_exercise
+import com.example.gymbro.klikniety
 import com.example.gymbro.length_of_exercise
 import com.example.gymbro.list_of_selected_muscles
 import com.example.gymbro.name_of_exercise
@@ -154,21 +155,32 @@ fun AddExerciseBackScreen(navController: NavHostController, bottomPadding: Dp){
                     Spacer(modifier = Modifier.weight(0.075f))
                     Button(onClick = {
                         val listOfElementsToPush = mutableListOf<ExerciseElement>()
-                        for (selected in list_of_selected_muscles) {
-                            val muscle = listOfMuscles.find { it.nazwa_miesnia == selected }
-                            if (muscle != null) {
-                                listOfElementsToPush.add(ExerciseElement(0, description_of_exercise, muscle.id_m, length_of_exercise.toFloat(), name_of_exercise))
+                        if (klikniety == "") {
+                            for (selected in list_of_selected_muscles) {
+                                val muscle = listOfMuscles.find { it.nazwa_miesnia == selected }
+                                if (muscle != null) {
+                                    listOfElementsToPush.add(
+                                        ExerciseElement(
+                                            0,
+                                            description_of_exercise,
+                                            muscle.id_m,
+                                            length_of_exercise.toFloat(),
+                                            name_of_exercise
+                                        )
+                                    )
+                                }
                             }
-                        }
 
-                        for (selected in listOfElementsToPush) {
-                            viewModelExercise.addExerciseElement(selected)
+                            for (selected in listOfElementsToPush) {
+                                viewModelExercise.addExerciseElement(selected)
+                            }
+                            name_of_exercise = ""
+                            description_of_exercise = ""
+                            length_of_exercise = "0.0"
+                            list_of_selected_muscles.clear()
                         }
-                        name_of_exercise = ""
-                        description_of_exercise = ""
-                        length_of_exercise = "0.0"
-                        list_of_selected_muscles.clear()
                         navController.navigate(Screens.LibraryScreen.route)
+
                     },
                         modifier = Modifier.weight(0.375f)) {
                         Text(text = "ACCEPT")
@@ -179,6 +191,7 @@ fun AddExerciseBackScreen(navController: NavHostController, bottomPadding: Dp){
                         description_of_exercise = ""
                         length_of_exercise = "0.0"
                         list_of_selected_muscles.clear()
+                        klikniety = ""
                         navController.navigate(Screens.LibraryScreen.route)
                     },
                         modifier = Modifier.weight(0.375f)) {

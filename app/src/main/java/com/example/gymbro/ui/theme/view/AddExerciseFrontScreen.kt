@@ -27,6 +27,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.gymbro.description_of_exercise
+import com.example.gymbro.klikniety
 import com.example.gymbro.length_of_exercise
 import com.example.gymbro.list_of_selected_muscles
 import com.example.gymbro.name_of_exercise
@@ -63,6 +65,11 @@ import com.example.gymbro.ui.theme.viewModel.MuscleViewModelFactory
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp){
+
+
+
+
+
 
     var name_of_exercisee by remember { mutableStateOf("") }
     name_of_exercisee = name_of_exercise
@@ -82,6 +89,27 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
         MuscleViewModelFactory(LocalContext.current.applicationContext as Application)
     )
     val listOfMuscles by viewModelMuscle.usersState.collectAsStateWithLifecycle()
+
+
+    if (klikniety != "")
+    {
+        val listOfExercises by viewModelExercise.usersState.collectAsStateWithLifecycle()
+        val ultraRizzSigmaGyatt = mutableListOf<String>()
+        for (selected in listOfExercises) {
+            if (selected.nazwa == klikniety)
+                listOfMuscles.find { it.id_m == selected.m_id }
+                    ?.let { ultraRizzSigmaGyatt.add(it.nazwa_miesnia) }
+        }
+        name_of_exercise = klikniety
+        listOfExercises.find { it.nazwa == klikniety }?.let { description_of_exercise = it.opis
+        length_of_exercise = it.dlugosc_ruchu.toString()
+        }
+        name_of_exercisee = name_of_exercise
+        description_of_exercisee = description_of_exercise
+        length_of_exercisee = length_of_exercise
+        list_of_selected_muscles = ultraRizzSigmaGyatt
+    }
+
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -159,21 +187,32 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
                     Spacer(modifier = Modifier.weight(0.075f))
                     Button(onClick = {
                         val listOfElementsToPush = mutableListOf<ExerciseElement>()
-                        for (selected in list_of_selected_muscles) {
-                            val muscle = listOfMuscles.find { it.nazwa_miesnia == selected }
-                            if (muscle != null) {
-                                listOfElementsToPush.add(ExerciseElement(0, description_of_exercise, muscle.id_m, length_of_exercise.toFloat(), name_of_exercise))
+                        if (klikniety == "") {
+                            for (selected in list_of_selected_muscles) {
+                                val muscle = listOfMuscles.find { it.nazwa_miesnia == selected }
+                                if (muscle != null) {
+                                    listOfElementsToPush.add(
+                                        ExerciseElement(
+                                            0,
+                                            description_of_exercise,
+                                            muscle.id_m,
+                                            length_of_exercise.toFloat(),
+                                            name_of_exercise
+                                        )
+                                    )
+                                }
                             }
-                        }
 
-                        for (selected in listOfElementsToPush) {
-                            viewModelExercise.addExerciseElement(selected)
+                            for (selected in listOfElementsToPush) {
+                                viewModelExercise.addExerciseElement(selected)
+                            }
+                            name_of_exercise = ""
+                            description_of_exercise = ""
+                            length_of_exercise = "0.0"
+                            list_of_selected_muscles.clear()
                         }
-                        name_of_exercise = ""
-                        description_of_exercise = ""
-                        length_of_exercise = "0.0"
-                        list_of_selected_muscles.clear()
-                        navController.navigate(Screens.LibraryScreen.route)
+                            navController.navigate(Screens.LibraryScreen.route)
+
                     },
                         modifier = Modifier.weight(0.375f)) {
                         Text(text = "ACCEPT")
@@ -184,6 +223,7 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
                         description_of_exercise = ""
                         length_of_exercise = "0.0"
                         list_of_selected_muscles.clear()
+                        klikniety = ""
                         navController.navigate(Screens.LibraryScreen.route)
                     },
                         modifier = Modifier.weight(0.375f)) {
@@ -196,20 +236,20 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
                 var selectedMuscle by remember { mutableStateOf("") }
                 var items by remember { mutableStateOf(listOf<String>()) }
                 items = list_of_selected_muscles.toList()
-                Canvas(modifier = Modifier.offset(y = (-60).dp).size((zmienna*210).dp, (zmienna*297).dp)
+                Canvas(modifier = Modifier
+                    .offset(y = (-60).dp)
+                    .size((zmienna * 210).dp, (zmienna * 297).dp)
                     .pointerInput(Unit) {
                         detectTapGestures(
-                            onTap = {tapOffset ->
+                            onTap = { tapOffset ->
                                 var index = 0
                                 //var porown: Pair<Float, Float> = Pair<Float, Float>(tapOffset.x, tapOffset.y)
 
                                 val prawa: Boolean = tapOffset.x > 2
-                                for (miesien in miesnie.miesnie)
-                                {
-                                    var counter: Int = zmienna.toInt()*(81 + 130)/2
-                                    for (trojkot in miesien.value)
-                                    {
-                                        if(counter % 2 == 1 && prawa || counter % 2 == 0 && !prawa) {
+                                for (miesien in miesnie.miesnie) {
+                                    var counter: Int = zmienna.toInt() * (81 + 130) / 2
+                                    for (trojkot in miesien.value) {
+                                        if (counter % 2 == 1 && prawa || counter % 2 == 0 && !prawa) {
                                             val d1 =
                                                 tapOffset.x * (trojkot.first.second - trojkot.second.second) + tapOffset.y * (trojkot.second.first - trojkot.first.first) + (trojkot.first.first * trojkot.second.second - trojkot.first.second * trojkot.second.first)
                                             val d2 =
@@ -219,11 +259,10 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
                                             if ((d1 <= 0) && (d2 <= 0) && (d3 <= 0) || (d1 >= 0) && (d2 >= 0) && (d3 >= 0)) {
                                                 println(miesien.key)
                                                 selectedMuscle = miesien.key
-                                                if(miesien.key in items) {
+                                                if (miesien.key in items) {
                                                     list_of_selected_muscles.remove(miesien.key)
                                                     items = list_of_selected_muscles.toList()
-                                                }
-                                                else {
+                                                } else {
                                                     list_of_selected_muscles.add(miesien.key)
                                                     items = list_of_selected_muscles.toList()
                                                 }
@@ -231,7 +270,8 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
                                         }
                                     }
                                 }
-                            })})
+                            })
+                    })
                 {
                     val path = Path()
 

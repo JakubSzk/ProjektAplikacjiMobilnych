@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.gymbro.klikniety
 import com.example.gymbro.ui.theme.LightGreen
 import com.example.gymbro.ui.theme.Purple40
 import com.example.gymbro.ui.theme.model.ExerciseElement
@@ -79,6 +80,7 @@ fun LibraryScreen(navController: NavHostController, bottomPadding: Dp){
                             .padding(8.dp)
                             .background(Color.LightGray)
                             .clickable {
+                                klikniety = pobierane[it]
                                 navController.navigate(Screens.AddExerciseFront.route)
                             }
                         )
