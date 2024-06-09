@@ -22,7 +22,8 @@ data class ExerciseElement(
     @PrimaryKey(autoGenerate = true) val id_e: Int,
     val opis: String,
     val m_id: Int,
-    val dlugosc_ruchu: Float
+    val dlugosc_ruchu: Float,
+    val nazwa: String
 )
 @Dao
 interface ExerciseDao {
