@@ -2,7 +2,9 @@ package com.example.gymbro.ui.theme.model
 import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gymbro.ui.theme.viewModel.MuscleViewModel
@@ -17,13 +19,14 @@ fun InitiateMusclesIfNotExist()
         "UserViewModel",
         MuscleViewModelFactory(LocalContext.current.applicationContext as Application)
     )
+    val elements by viewModel.usersState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
 
 
         //first check if there are any muscles in database
         //I won't add clearing function because it shouldn't be used
-        viewModel.isItEmpty()
-        if (viewModel.emptyBool) {
+
+        if (elements.isEmpty()) {
             viewModel.addMuscleElement(MuscleElement(0, "klata_gora"))
             viewModel.addMuscleElement(MuscleElement(1, "klata_dol"))
             viewModel.addMuscleElement(MuscleElement(2, "barki"))

@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.gymbro.ui.theme.view.AchivementsScreen
+import com.example.gymbro.ui.theme.view.AddExerciseBackScreen
 import com.example.gymbro.ui.theme.view.AddExercisesFrontScreen
 import com.example.gymbro.ui.theme.view.AddExercisesToTrainingScreen
 import com.example.gymbro.ui.theme.view.AddTrainingScreen
@@ -47,6 +48,7 @@ sealed class Screens(val route: String) {
     object StatsScreen : Screens("stats")
     object TrainingListScreen : Screens("trainings")
     object AddExerciseFront : Screens("adding_exercise")
+    object AddExerciseBack : Screens("adding_exercise_back")
 
 }
 
@@ -92,6 +94,7 @@ fun BottomNavGraph(navController: NavHostController, bottomPadding: Dp){
         composable(route = Screens.MuscleTrainedScreen.route){ MuscleTraindedScreen() }
         composable(route = Screens.TrainingListScreen.route){ TrainingListScreen() }
         composable(route = Screens.AddExerciseFront.route){ AddExercisesFrontScreen(navController, bottomPadding) }
+        composable(route = Screens.AddExerciseBack.route){ AddExerciseBackScreen(navController, bottomPadding)}
     }
 }
 

@@ -42,6 +42,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -50,10 +52,13 @@ import com.example.gymbro.length_of_exercise
 import com.example.gymbro.list_of_selected_muscles
 import com.example.gymbro.name_of_exercise
 import com.example.gymbro.ui.theme.LightGreen
+import com.example.gymbro.ui.theme.model.ExerciseElement
 import com.example.gymbro.ui.theme.model.Screens
 import com.example.gymbro.ui.theme.viewModel.ExerciseViewModel
 import com.example.gymbro.ui.theme.viewModel.ExerciseViewModelFactory
 import com.example.gymbro.ui.theme.viewModel.FrontHitboxes
+import com.example.gymbro.ui.theme.viewModel.MuscleViewModel
+import com.example.gymbro.ui.theme.viewModel.MuscleViewModelFactory
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -71,6 +76,12 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
         "UserViewModelExercise",
         ExerciseViewModelFactory(LocalContext.current.applicationContext as Application)
     )
+    val viewModelMuscle: MuscleViewModel = viewModel(
+        LocalViewModelStoreOwner.current!!,
+        "UserViewModelMuscle",
+        MuscleViewModelFactory(LocalContext.current.applicationContext as Application)
+    )
+    val listOfMuscles by viewModelMuscle.usersState.collectAsStateWithLifecycle()
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -78,7 +89,7 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
         floatingActionButton = {
             FloatingActionButton( modifier = Modifier.clickable{},
                 onClick = {
-                    navController.navigate(Screens.AddExerciseFront.route)
+                    navController.navigate(Screens.AddExerciseBack.route)
                 },
                 containerColor = LightGreen
             ) {
@@ -144,13 +155,38 @@ fun AddExercisesFrontScreen(navController: NavHostController, bottomPadding: Dp)
                         .fillMaxWidth()
                         .padding(bottom = 4.dp)
                 )
-                Row {
+                Row (modifier = Modifier.zIndex(1f)) {
                     Spacer(modifier = Modifier.weight(0.075f))
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.weight(0.375f)) {
+                    Button(onClick = {
+                        val listOfElementsToPush = mutableListOf<ExerciseElement>()
+                        for (selected in list_of_selected_muscles) {
+                            val muscle = listOfMuscles.find { it.nazwa_miesnia == selected }
+                            if (muscle != null) {
+                                listOfElementsToPush.add(ExerciseElement(0, description_of_exercise, muscle.id_m, length_of_exercise.toFloat(), name_of_exercise))
+                            }
+                        }
+
+                        for (selected in listOfElementsToPush) {
+                            viewModelExercise.addExerciseElement(selected)
+                        }
+                        name_of_exercise = ""
+                        description_of_exercise = ""
+                        length_of_exercise = "0.0"
+                        list_of_selected_muscles.clear()
+                        navController.navigate(Screens.LibraryScreen.route)
+                    },
+                        modifier = Modifier.weight(0.375f)) {
                         Text(text = "ACCEPT")
                     }
                     Spacer(modifier = Modifier.weight(0.1f))
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.weight(0.375f)) {
+                    Button(onClick = {
+                        name_of_exercise = ""
+                        description_of_exercise = ""
+                        length_of_exercise = "0.0"
+                        list_of_selected_muscles.clear()
+                        navController.navigate(Screens.LibraryScreen.route)
+                    },
+                        modifier = Modifier.weight(0.375f)) {
                         Text(text = "BACK")
                     }
                     Spacer(modifier = Modifier.weight(0.075f))
